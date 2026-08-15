@@ -1,5 +1,5 @@
-import { spawn, spawnSync } from 'node:child_process';
-import { mkdtempSync, writeFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createRequire } from 'node:module';
@@ -82,8 +82,12 @@ export async function startTestDatabase(): Promise<TestDatabase> {
     spawnSync(join(bin, 'pg_ctl'), ['-D', dataDir, '-m', 'immediate', '-w', 'stop'], {
       encoding: 'utf8',
     });
-    // Detached cleanup; a leftover temp dir must never fail a test run.
-    spawn('rm', ['-rf', root], { detached: true, stdio: 'ignore' }).unref();
+    // A leftover temp dir must never fail a test run.
+    try {
+      rmSync(root, { recursive: true, force: true });
+    } catch {
+      // Best effort — the OS reclaims the temp dir either way.
+    }
   };
 
   return { pool, connectionString, stop };

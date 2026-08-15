@@ -54,10 +54,15 @@ export function registerAuthRoutes(
           .send({ user: { id: account.id, email: account.email }, family: { id: familyId } });
       } catch (error) {
         if (error instanceof EmailAlreadyRegisteredError) {
+          // Deliberately neutral: the spec requires the response not to confirm
+          // whether the address is already registered. Note this only narrows the
+          // leak — the 409 status still distinguishes this case. Closing it fully
+          // needs an email-verification flow (always answer 202, confirm out of band),
+          // which is out of scope for the walking skeleton. Tracked in the PR body.
           return fail(
             reply,
             409,
-            'email_already_registered',
+            'registration_rejected',
             'That email address cannot be registered.',
             'email',
           );

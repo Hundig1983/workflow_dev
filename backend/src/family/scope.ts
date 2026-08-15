@@ -22,6 +22,12 @@ export type FamilyRole = 'parent' | 'child';
 /**
  * The single place a FamilyScope is minted. It derives the family from the
  * authenticated user's membership rows — never from anything the client sent.
+ *
+ * Takes the caller's oldest membership. Today every user has exactly one, because
+ * registration creates exactly one family. The schema already permits several, so
+ * when the PRD's open question "can one user belong to several families?" is answered
+ * yes, this silently picking the first becomes wrong — the caller will need to say
+ * which family they mean, and this signature will have to carry it.
  */
 export async function resolveFamilyScope(
   db: Queryable,

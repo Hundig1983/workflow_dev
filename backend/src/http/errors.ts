@@ -2,7 +2,7 @@ import type { FastifyReply } from 'fastify';
 
 export type ErrorCode =
   | 'validation_failed'
-  | 'email_already_registered'
+  | 'registration_rejected'
   | 'invalid_credentials'
   | 'unauthenticated'
   | 'forbidden'
