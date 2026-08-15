@@ -1,9 +1,4 @@
-<!-- Version: 1.1 | Date: 2026-08-15 | Author: orchestrate-constitution -->
-<!-- Changes: v1.1 — text refresh only. docs/ARCHITECTURE.md drifted (backend framework decided:
-     Fastify, issue #2); no article's cited span changed and every rule_hash is unchanged, so all five
-     articles keep their IDs. The Fastify decision was reviewed at HALT 3 and held in the candidate
-     appendix (c-101) rather than promoted — Article III.1 already binds what the PRD constrained, and
-     the framework is the one choice the source explicitly declined to bind. -->
+<!-- Version: 1.0 | Date: 2026-08-15 | Author: orchestrate-constitution -->
 <!-- Changes: v1.0 — initial derive from docs/PRD/PRD.md and docs/ARCHITECTURE.md (both status: seed) -->
 
 # Project Constitution — FamilyHub

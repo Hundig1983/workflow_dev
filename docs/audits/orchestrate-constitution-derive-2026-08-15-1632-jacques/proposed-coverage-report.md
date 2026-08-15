@@ -37,21 +37,13 @@ contains the text each article's verification predicate looks for.
 
 **It does not mean the code obeys the constitution.** Every predicate in this manifest is of type
 `citation` or `text-presence`, evaluated against the proposal's prose. There are **no**
-`code_must_contain` / `code_must_not_contain` predicates, so nothing here inspects the diff — and
-`issue-orchestrator`'s Phase 8 post-flight check, the half that would close this loop, therefore has
-nothing to run. A change whose proposal used all the right words while the implementation did the
-opposite would score 100% here.
+`code_must_contain` / `code_must_not_contain` predicates, so nothing here inspects the diff. A change
+whose proposal said all the right words while the implementation did the opposite would score 100%.
 
-For this particular change the code *was* independently verified — 51 tests against real PostgreSQL 17.4,
-plus a mutation check confirming the family-isolation suite fails when scoping is removed. That assurance
-comes from `docs/audits/job-audit_2_jacques_2026-08-15-1622.md`, **not from this coverage number.**
+For this particular change the code *was* independently verified — 51 tests against real PostgreSQL,
+plus a mutation check confirming the family-isolation suite fails when scoping is removed (see
+`docs/audits/job-audit_2_jacques_2026-08-15-1622.md`). That assurance comes from the job audit, **not
+from this coverage number.**
 
 Treat this report as advisory, as v1.0 intends. Raising it to real assurance requires adding code-level
-predicates to the manifest so the post-flight check has something to evaluate against the diff.
-
-## Candidate appendix status
-
-`c-101` — *backend framework is Fastify* — reviewed at HALT 3 on 2026-08-15 and **held in the appendix**,
-not promoted. Article III.1 already binds what the PRD actually constrained (REST, PostgreSQL,
-reproducible migrations, TypeScript, Expo, Docker); the framework is the one choice the source explicitly
-declined to bind. Recorded in `docs/ARCHITECTURE.md` and the change's `design.md` instead.
+predicates to the manifest so `issue-orchestrator`'s Phase 8 post-flight check has something to run.
