@@ -98,8 +98,8 @@ export function createApiClient({ getToken, onUnauthenticated }: ApiClientOption
     try {
       payload = await response.json();
     } catch {
-      // A non-JSON body on an error status is still an error, just an opaque one.
-      if (!response.ok) throw new NetworkError('The server returned an unreadable response.');
+      // An unreadable body is a transport-level problem whether or not the status was
+      // ok — there is nothing to interpret either way.
       throw new NetworkError('The server returned an unreadable response.');
     }
 
