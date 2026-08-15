@@ -1,0 +1,16 @@
+{
+  "name": "familyhub",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FamilyHub — workspace scripts. The backend and client keep their own package.json and dependencies; nothing is installed at this level.",
+  "scripts": {
+    "db:dev": "node scripts/devdb.mjs start",
+    "db:dev:stop": "node scripts/devdb.mjs stop",
+    "db:dev:status": "node scripts/devdb.mjs status",
+    "db:dev:reset": "node scripts/devdb.mjs reset",
+    "backend:migrate": "npm --prefix backend run migrate",
+    "backend:dev": "npm --prefix backend run dev",
+    "backend:test": "npm --prefix backend test",
+    "client:web": "npm --prefix client run web"
+  }
+}
