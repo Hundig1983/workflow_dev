@@ -1,0 +1,15 @@
+{
+  "schema": "sdd-handoff/v1",
+  "feature_slug": "add-auth-walking-skeleton",
+  "mode": "openspec",
+  "spec_path": "openspec/changes/add-auth-walking-skeleton/",
+  "spec_file": "openspec/changes/add-auth-walking-skeleton/proposal.md",
+  "spec_fingerprint": "openspec-validate",
+  "alignment": {
+    "mode": "aligned",
+    "scope_tags": ["auth", "tenancy", "infra", "testing"],
+    "applicable_article_ids": ["I.1", "I.2", "III.1", "III.2"]
+  },
+  "issue": null,
+  "stages": ["spec-creator"]
+}
