@@ -1,0 +1,114 @@
+{
+  "schema": "sdd-handoff/v1",
+  "provenance": "seed",
+  "feature_slug": null,
+  "mode": "reconcile",
+  "seeded": "2026-08-15",
+  "product_name_assumed": "FamilyHub",
+  "roster": {
+    "prd": "docs/PRD/PRD.md",
+    "architecture": "docs/ARCHITECTURE.md",
+    "roadmap": "docs/ROADMAP.md"
+  },
+  "fingerprints": {
+    "docs/PRD/PRD.md": "sha256:eeb65e3776673346e9a34170480a0bea0570382275fe86d39b2957f4c58218f6",
+    "docs/ARCHITECTURE.md": "sha256:f7902afef1cb8fbb033155cdea636384721103f4461193c1b39d3f08e701be08",
+    "docs/ROADMAP.md": "sha256:8e8d70af80e0c34578ac665ea7329139518468b9bc51b3daa9b9ba20168aadbf"
+  },
+  "evidence": [
+    { "doc": "docs/PRD/PRD.md", "section": "Problem", "level": "partial" },
+    { "doc": "docs/PRD/PRD.md", "section": "Users", "level": "partial" },
+    { "doc": "docs/PRD/PRD.md", "section": "Goals & scope", "level": "partial" },
+    { "doc": "docs/PRD/PRD.md", "section": "Non-goals", "level": "partial" },
+    { "doc": "docs/PRD/PRD.md", "section": "Constraints", "level": "partial" },
+    { "doc": "docs/ARCHITECTURE.md", "section": "Intended stack", "level": "partial" },
+    { "doc": "docs/ARCHITECTURE.md", "section": "High-level components & boundaries", "level": "intent-based" },
+    { "doc": "docs/ARCHITECTURE.md", "section": "Key decisions (as assumptions / candidate ADRs)", "level": "partial" },
+    { "doc": "docs/ARCHITECTURE.md", "section": "Integration points", "level": "intent-based" },
+    { "doc": "docs/ROADMAP.md", "section": "Direction", "level": "partial" }
+  ],
+  "assumptions": [
+    { "doc": "docs/PRD/PRD.md", "section": "Assumptions", "text": "Product name assumed as 'FamilyHub' from the source document's own title — not independently confirmed." },
+    { "doc": "docs/PRD/PRD.md", "section": "Assumptions", "text": "One administrator per family assumed sufficient for MVP." },
+    { "doc": "docs/PRD/PRD.md", "section": "Assumptions", "text": "Shopping-list write conflicts default to last-write-wins for MVP; source explicitly flags this must stay an explicit decision." },
+    { "doc": "docs/PRD/PRD.md", "section": "Assumptions", "text": "Purchased shopping items stay visible until explicitly cleared, per stated preference; source also lists this as an open question needing confirmation." },
+    { "doc": "docs/PRD/PRD.md", "section": "Assumptions", "text": "MVP recurrence limited to daily/weekly/monthly patterns only." },
+    { "doc": "docs/PRD/PRD.md", "section": "Assumptions", "text": "Backend web framework unspecified; source explicitly defers this to the architecture phase." },
+    { "doc": "docs/ARCHITECTURE.md", "section": "Assumptions", "text": "Backend runtime assumed Node.js-family (TypeScript is fixed, but the specific framework is not decided)." },
+    { "doc": "docs/ARCHITECTURE.md", "section": "Assumptions", "text": "Expo-managed workflow assumed sufficient for most of MVP; bare/native config assumed necessary later for background location + push." }
+  ],
+  "open_questions": [
+    { "doc": "docs/PRD/PRD.md", "section": "Family & accounts", "text": "Can one user belong to several families?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Family & accounts", "text": "Can a child have an account? Can a child profile exist without an account?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Family & accounts", "text": "Who can invite family members? Who can remove a member?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Family & accounts", "text": "What happens when an event participant leaves the family? What happens to tasks assigned to a removed member? What should happen to a family when its administrator leaves?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Calendar", "text": "Can children create calendar events? Can children see all family events?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Calendar", "text": "How should recurring calendar events be represented — instances generated dynamically, or ahead of time?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Calendar", "text": "Editing a recurring event: this occurrence only, this-and-future, or the entire series — which (if any) should MVP support?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Calendar", "text": "Should calendar events support attachments?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Calendar", "text": "Should the app support multiple time zones? How should DST changes be handled?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Shopping", "text": "Beyond the tentative last-write-wins default, is there a better simultaneous-edit resolution to commit to?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Shopping", "text": "Should shopping-list changes generate notifications, and if so batched how?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Location", "text": "Exact authorization model: who can see whose location (parent-child, child-child)? Can a parent disable a child's sharing? How is a child's consent represented?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Location", "text": "Should location sharing expire automatically?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Location", "text": "How often should location update, and should updates happen in the background?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Location", "text": "Should the server retain even the latest known location, or is that already too much?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Location", "text": "Should family members be notified when someone starts/stops sharing their location?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Cross-cutting / platform", "text": "Offline support: implement broadly, explicitly defer, or design-for-but-implement-only-shopping?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Cross-cutting / platform", "text": "How should conflicting offline changes be merged?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Cross-cutting / platform", "text": "What is the minimum viable notification system across all four feature areas?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Cross-cutting / platform", "text": "Should there be a web client at all, beyond a possible later small admin interface?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Cross-cutting / platform", "text": "Should data be encrypted at rest?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Cross-cutting / platform", "text": "How long should location data be retained, if any is retained at all?" },
+    { "doc": "docs/PRD/PRD.md", "section": "Cross-cutting / platform", "text": "How can a user export their data? How can a user delete their account and all family data?" },
+    { "doc": "docs/ARCHITECTURE.md", "section": "Open Questions", "text": "Exact location update-frequency strategy (normal vs. battery-saving modes)." },
+    { "doc": "docs/ARCHITECTURE.md", "section": "Open Questions", "text": "Where precisely Expo-managed capabilities suffice vs. where native configuration becomes required." },
+    { "doc": "docs/ARCHITECTURE.md", "section": "Open Questions", "text": "Backend web framework choice — explicitly deferred to the architecture phase." },
+    { "doc": "docs/ARCHITECTURE.md", "section": "Open Questions", "text": "Eventual realtime mechanism (WebSockets vs. an alternative)." },
+    { "doc": "docs/ARCHITECTURE.md", "section": "Open Questions", "text": "Whether data should be encrypted at rest." },
+    { "doc": "docs/ROADMAP.md", "section": "Open Questions", "text": "Which MVP vertical slice should be built first — shared shopping lists or the family calendar?" },
+    { "doc": "docs/ROADMAP.md", "section": "Open Questions", "text": "Should the five pre-planned workflow-benchmark change requests run strictly after a stable MVP, or be interleaved?" }
+  ],
+  "candidate_backlog": [
+    { "theme": "foundation", "items": [
+      "email/password auth (isolated from family/business logic), session persistence, eventual password reset",
+      "family + family-member + invitation model",
+      "family-data-isolation & server-side authorization backbone (with dedicated tests)",
+      "base REST API skeleton",
+      "Docker + Postgres + migrations setup"
+    ] },
+    { "theme": "governance", "items": [
+      "security/privacy-first rules as candidate binding constitution articles",
+      "family-isolation boundary as a candidate binding article",
+      "AI guardrail (no location-to-LLM, no training on family data) as a candidate binding article",
+      "unit/integration/E2E testing strategy"
+    ] },
+    { "theme": "first-vertical-slice", "items": [
+      "candidate: shared shopping lists (strongest offline case, simple end-to-end slice)",
+      "candidate: family calendar (called central, presented first)",
+      "no build-order decision made — see Open Questions"
+    ] },
+    { "theme": "core-features", "items": [
+      "calendar", "tasks", "location sharing", "baseline notifications (calendar reminder, task assignment)"
+    ] }
+  ],
+  "source_map": [
+    { "source_path": "project_idea/ideas.txt",
+      "canonical_targets": [
+        "docs/PRD/PRD.md#Problem", "docs/PRD/PRD.md#Users", "docs/PRD/PRD.md#Goals-scope",
+        "docs/PRD/PRD.md#Non-goals", "docs/PRD/PRD.md#Constraints",
+        "docs/PRD/PRD.md#Candidate-structural-backlog", "docs/PRD/PRD.md#Assumptions",
+        "docs/PRD/PRD.md#Open-Questions",
+        "docs/ARCHITECTURE.md#Intended-stack", "docs/ARCHITECTURE.md#High-level-components-boundaries",
+        "docs/ARCHITECTURE.md#Key-decisions", "docs/ARCHITECTURE.md#Integration-points",
+        "docs/ARCHITECTURE.md#Assumptions", "docs/ARCHITECTURE.md#Open-Questions",
+        "docs/ROADMAP.md#Direction", "docs/ROADMAP.md#Candidate-themes", "docs/ROADMAP.md#Open-Questions"
+      ],
+      "action": "referenced" }
+  ],
+  "notes": [
+    "README.md was read (Phase 1) but is currently a placeholder stub with no product-intent content — it contributed nothing and is intentionally absent from source_map.",
+    "openspec/, .claude/commands/opsx/, and .claude/skills/openspec-*/ were present at seed time (tooling scaffolding from an unrelated CLI install) and were correctly excluded from reconciliation as non-intent sources."
+  ],
+  "proposed_doc_reshaping": []
+}
