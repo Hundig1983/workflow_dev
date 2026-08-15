@@ -10,6 +10,10 @@
     "scope_tags": ["auth", "tenancy", "infra", "testing"],
     "applicable_article_ids": ["I.1", "I.2", "III.1", "III.2"]
   },
-  "issue": null,
-  "stages": ["spec-creator"]
+  "issue": {
+    "forge": "github",
+    "number": 2,
+    "url": "https://github.com/Hundig1983/workflow_dev/issues/2"
+  },
+  "stages": ["spec-creator", "create-issue"]
 }
