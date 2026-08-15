@@ -16,8 +16,11 @@ seeded: 2026-08-15
 - **Mobile**: React Native + Expo + TypeScript. Cross-platform (iOS + Android) explicitly to avoid
   maintaining two separate native codebases. No web client required for MVP; a small admin/web interface
   is a possible later addition, not a v1 requirement.
-- **Backend**: a REST API ("sufficient for the first version" — framework unspecified, explicitly
-  deferred to the architecture phase).
+- **Backend**: a REST API ("sufficient for the first version") on **Fastify + TypeScript** (Node.js).
+  The framework was left open by the source and **decided in the walking-skeleton change**
+  (`openspec/changes/add-auth-walking-skeleton/design.md`, issue #2) — chosen for its TypeScript-first
+  API and per-route JSON Schema validation, over NestJS (heavier than a deliberately small project
+  wants), Express (weaker TS story, no built-in validation), and Hono (thinner session ecosystem).
 - **Database**: PostgreSQL, with reproducible migrations and FK/constraints enforcing invariants
   (multi-family, multi-member, shared resources, event participants, recurring activities, location
   sharing).
@@ -94,9 +97,9 @@ seeded: 2026-08-15
 *(source: §29, §34, §39, §40)*
 
 ## Assumptions
-- Backend runtime/framework is unconfirmed. TypeScript is a fixed project-wide constraint and a
-  Node.js-family runtime (Node/Deno/Bun) is the practical implication, but the source explicitly defers
-  the actual framework choice to the architecture phase — do not treat "Node.js" as decided.
+- ~~Backend runtime/framework is unconfirmed.~~ **Resolved** — Node.js + Fastify + TypeScript, decided
+  and implemented in the walking-skeleton change (issue #2). Recorded here as a grounded fact rather
+  than an assumption: the backend exists and runs on it.
 - Expo-managed workflow is assumed sufficient for most of MVP; a "bare"/native-config escape hatch is
   assumed necessary later for background location and push — the source asks the workflow to pin down
   exactly where that line falls, which has not been done here.
@@ -106,7 +109,7 @@ seeded: 2026-08-15
   this must not be hardcoded before understanding real platform capabilities.
 - Where precisely Expo-managed capabilities are sufficient vs. where native configuration becomes
   required (background location, push).
-- Backend web framework choice — explicitly deferred to the architecture phase, not decided here.
+- ~~Backend web framework choice.~~ **Answered**: Fastify (issue #2) — see Intended stack above.
 - The eventual realtime mechanism (WebSockets vs. an alternative) once "close to real-time" collaboration
   needs it.
 - Whether data should be encrypted at rest.
