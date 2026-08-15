@@ -1,0 +1,219 @@
+{
+  "$schema": "https://example.org/orchestrate-constitution/manifest.v1.json",
+  "constitution_version": "1.0",
+  "generated_at": "2026-08-15T12:13:28Z",
+  "generator": "orchestrate-constitution v1.0",
+  "steward": "jacques",
+  "adoption_review_due": "2026-11-13",
+  "cap": { "binding": 5, "limit": 12, "breach": false, "breach_reason": null },
+  "sources": [
+    { "id": "prd-constraint-security-privacy", "path": "docs/PRD/PRD.md", "kind": "prd-constraint", "sha256": "eeb65e3776673346e9a34170480a0bea0570382275fe86d39b2957f4c58218f6", "last_modified": "2026-08-15", "status": null, "section_anchor": "Constraints" },
+    { "id": "prd-constraint-ai-guardrail", "path": "docs/PRD/PRD.md", "kind": "prd-constraint", "sha256": "eeb65e3776673346e9a34170480a0bea0570382275fe86d39b2957f4c58218f6", "last_modified": "2026-08-15", "status": null, "section_anchor": "Constraints" },
+    { "id": "prd-constraint-technical-baseline", "path": "docs/PRD/PRD.md", "kind": "prd-constraint", "sha256": "eeb65e3776673346e9a34170480a0bea0570382275fe86d39b2957f4c58218f6", "last_modified": "2026-08-15", "status": null, "section_anchor": "Constraints" },
+    { "id": "prd-constraint-battery", "path": "docs/PRD/PRD.md", "kind": "prd-constraint", "sha256": "eeb65e3776673346e9a34170480a0bea0570382275fe86d39b2957f4c58218f6", "last_modified": "2026-08-15", "status": null, "section_anchor": "Constraints" },
+    { "id": "prd-constraint-scope-discipline", "path": "docs/PRD/PRD.md", "kind": "prd-constraint", "sha256": "eeb65e3776673346e9a34170480a0bea0570382275fe86d39b2957f4c58218f6", "last_modified": "2026-08-15", "status": null, "section_anchor": "Constraints" },
+    { "id": "prd-oos-permanent", "path": "docs/PRD/PRD.md", "kind": "prd-out-of-scope", "sha256": "eeb65e3776673346e9a34170480a0bea0570382275fe86d39b2957f4c58218f6", "last_modified": "2026-08-15", "status": null, "section_anchor": "Non-goals" },
+    { "id": "prd-oos-deferred", "path": "docs/PRD/PRD.md", "kind": "prd-out-of-scope", "sha256": "eeb65e3776673346e9a34170480a0bea0570382275fe86d39b2957f4c58218f6", "last_modified": "2026-08-15", "status": null, "section_anchor": "Non-goals" },
+    { "id": "arch-key-decisions-auth", "path": "docs/ARCHITECTURE.md", "kind": "arch-binding-block", "sha256": "f7902afef1cb8fbb033155cdea636384721103f4461193c1b39d3f08e701be08", "last_modified": "2026-08-15", "status": null, "section_anchor": "Key decisions" },
+    { "id": "arch-key-decisions-postgres", "path": "docs/ARCHITECTURE.md", "kind": "arch-binding-block", "sha256": "f7902afef1cb8fbb033155cdea636384721103f4461193c1b39d3f08e701be08", "last_modified": "2026-08-15", "status": null, "section_anchor": "Key decisions" },
+    { "id": "arch-key-decisions-realtime", "path": "docs/ARCHITECTURE.md", "kind": "arch-binding-block", "sha256": "f7902afef1cb8fbb033155cdea636384721103f4461193c1b39d3f08e701be08", "last_modified": "2026-08-15", "status": null, "section_anchor": "Key decisions" },
+    { "id": "arch-key-decisions-location", "path": "docs/ARCHITECTURE.md", "kind": "arch-binding-block", "sha256": "f7902afef1cb8fbb033155cdea636384721103f4461193c1b39d3f08e701be08", "last_modified": "2026-08-15", "status": null, "section_anchor": "Key decisions" },
+    { "id": "arch-key-decisions-ai", "path": "docs/ARCHITECTURE.md", "kind": "arch-binding-block", "sha256": "f7902afef1cb8fbb033155cdea636384721103f4461193c1b39d3f08e701be08", "last_modified": "2026-08-15", "status": null, "section_anchor": "Key decisions" }
+  ],
+  "articles": [
+    {
+      "id": "I", "title": "Data & Access Security", "scope_tags": ["auth", "tenancy", "privacy"],
+      "status": "binding", "promoted_at": "2026-08-15", "promoted_by": "jacques",
+      "sections": [
+        {
+          "id": "I.1", "title": "Server-side authorization & family isolation", "anchor": "article-i-1",
+          "rule": "All authorization MUST be enforced server-side; the frontend is never trusted to enforce permissions. Every family-scoped resource MUST be checked against the authenticated user's family membership, backed by dedicated automated tests.",
+          "rule_hash": "d7f7dd6ba98800d2a74baaf25e8429e630481eb9d68c98cf41a0b7c75a18809d",
+          "promoted_from": [
+            { "source_id": "prd-constraint-security-privacy", "kind": "prd-constraint" },
+            { "source_id": "arch-key-decisions-auth", "kind": "arch-binding-block" }
+          ],
+          "verification": {
+            "applies_when": { "spec_has_any_scope_tag": ["auth", "tenancy", "rbac"] },
+            "must_satisfy": [
+              { "type": "citation", "pattern": "Article I" },
+              { "type": "text-presence", "target": "spec.md", "pattern_regex": "server-side|backend.{0,20}(auth|permission)|family.{0,20}(isolat|scope)" }
+            ]
+          },
+          "violation_example": "checking permissions only in the mobile app's UI layer, or a query that doesn't filter by family membership",
+          "provenance": { "promoted_at": "2026-08-15", "promoted_by": "jacques", "via_halt": "halt-2", "rationale": "Corroborated independently at PRD-constraint and ARCHITECTURE-decision level; stated repeatedly and forcefully in the source." },
+          "status": "binding", "status_change": null
+        },
+        {
+          "id": "I.2", "title": "Transport & credential security", "anchor": "article-i-2",
+          "rule": "All data in transit MUST use HTTPS/TLS. Passwords MUST be stored using a secure password-hashing algorithm. No secret MAY be embedded in the mobile application. Session/auth tokens MUST be stored securely on-device.",
+          "rule_hash": "272cdf967625060e76857629b63ef5a5a95492bd8e2a66299e1891c4b81a4338",
+          "promoted_from": [{ "source_id": "prd-constraint-security-privacy", "kind": "prd-constraint" }],
+          "verification": {
+            "applies_when": { "spec_has_any_scope_tag": ["auth", "privacy", "infra"] },
+            "must_satisfy": [
+              { "type": "citation", "pattern": "Article I" },
+              { "type": "text-presence", "target": "spec.md", "pattern_regex": "TLS|HTTPS|hash|bcrypt|argon2|secure.{0,20}token" }
+            ]
+          },
+          "violation_example": "storing a plaintext password, or embedding an API key directly in the mobile bundle",
+          "provenance": { "promoted_at": "2026-08-15", "promoted_by": "jacques", "via_halt": "halt-2", "rationale": "PRD security baseline; unambiguous." },
+          "status": "binding", "status_change": null
+        },
+        {
+          "id": "I.3", "title": "Data retention & deletion", "anchor": "article-i-3",
+          "rule": "Location and family-data retention MUST be minimized. Users MUST have a functioning account and family-data deletion mechanism.",
+          "rule_hash": "be991800cf31c8220c263d1d35d5e561a84eb8d68427efca7df3dd285630dd36",
+          "promoted_from": [{ "source_id": "prd-constraint-security-privacy", "kind": "prd-constraint" }],
+          "verification": {
+            "applies_when": { "spec_has_any_scope_tag": ["privacy"] },
+            "must_satisfy": [
+              { "type": "citation", "pattern": "Article I" },
+              { "type": "text-presence", "target": "spec.md", "pattern_regex": "delet|retention|minimal" }
+            ]
+          },
+          "violation_example": "no account-deletion endpoint, or persisting full location history with no stated retention limit",
+          "provenance": { "promoted_at": "2026-08-15", "promoted_by": "jacques", "via_halt": "halt-2", "rationale": "PRD security baseline. The specific retention policy stays a candidate (arch-key-decisions-location) pending confirmation." },
+          "status": "binding", "status_change": null
+        }
+      ],
+      "supersedes": null, "supersede_reason": null
+    },
+    {
+      "id": "II", "title": "AI Assistant Data Boundary", "scope_tags": ["ai-safety", "privacy"],
+      "status": "binding", "promoted_at": "2026-08-15", "promoted_by": "jacques",
+      "sections": [
+        {
+          "id": "II.1", "title": "Read-only, tool-mediated access only", "anchor": "article-ii-1",
+          "rule": "Any AI assistant feature MUST access application data only through a fixed set of pre-authorized, read-only tools, scoped to what the authenticated user is already authorized to see. Direct database access by an AI component is forbidden.",
+          "rule_hash": "0264cc99b2c5215d1675daf48051db729e43e2b641e619ef0924eaa5ba8221b2",
+          "promoted_from": [{ "source_id": "arch-key-decisions-ai", "kind": "arch-binding-block" }],
+          "verification": {
+            "applies_when": { "spec_has_any_scope_tag": ["ai-safety"] },
+            "must_satisfy": [
+              { "type": "citation", "pattern": "Article II" },
+              { "type": "text-presence", "target": "spec.md", "pattern_regex": "read-only|pre-authorized tool|no direct.{0,20}(db|database)" }
+            ]
+          },
+          "violation_example": "an AI feature querying the database directly instead of going through a defined tool",
+          "provenance": { "promoted_at": "2026-08-15", "promoted_by": "jacques", "via_halt": "halt-3", "rationale": "ARCH decision, explicit and forceful; user approved HALT 3 (ARCH) — YES." },
+          "status": "binding", "status_change": null
+        },
+        {
+          "id": "II.2", "title": "No location-to-LLM, no training on family data", "anchor": "article-ii-2",
+          "rule": "Location data MUST NOT be sent to an LLM. Family data MUST NOT be used to train AI models.",
+          "rule_hash": "6ea1d798b401413ca33821d54861f919d4938cc99aa7a7b9a412078cb10a1568",
+          "promoted_from": [
+            { "source_id": "prd-constraint-ai-guardrail", "kind": "prd-constraint" },
+            { "source_id": "arch-key-decisions-ai", "kind": "arch-binding-block" }
+          ],
+          "verification": {
+            "applies_when": { "spec_has_any_scope_tag": ["ai-safety"] },
+            "must_satisfy": [
+              { "type": "citation", "pattern": "Article II" },
+              { "type": "text-presence", "target": "spec.md", "pattern_regex": "not.{0,20}(train|training)|no location.{0,20}(llm|model)" }
+            ]
+          },
+          "violation_example": "sending raw GPS coordinates in a prompt to an LLM provider, or including family records in a fine-tuning dataset",
+          "provenance": { "promoted_at": "2026-08-15", "promoted_by": "jacques", "via_halt": "halt-2", "rationale": "Corroborated at both PRD and ARCHITECTURE level; the most forcefully stated rule in the source document." },
+          "status": "binding", "status_change": null
+        }
+      ],
+      "supersedes": null, "supersede_reason": null
+    },
+    {
+      "id": "III", "title": "Technical Baseline", "scope_tags": ["infra", "docs", "testing"],
+      "status": "binding", "promoted_at": "2026-08-15", "promoted_by": "jacques",
+      "sections": [
+        {
+          "id": "III.1", "title": "Stack & runtime", "anchor": "article-iii-1",
+          "rule": "The backend runs as a REST API with PostgreSQL as the system of record, using reproducible database migrations. The mobile client is React Native, Expo, and TypeScript. The whole stack MUST run locally via Docker with a reproducible setup.",
+          "rule_hash": "85a0a590278c445f0c7e6d611bfd142197dbb58199e5b54472d378cb5b4c5587",
+          "promoted_from": [{ "source_id": "prd-constraint-technical-baseline", "kind": "prd-constraint" }],
+          "verification": {
+            "applies_when": { "spec_has_any_scope_tag": ["infra"] },
+            "must_satisfy": [
+              { "type": "citation", "pattern": "Article III" },
+              { "type": "text-presence", "target": "spec.md", "pattern_regex": "postgres|docker|expo|react native" }
+            ]
+          },
+          "violation_example": "introducing a second datastore or a native-only mobile codebase without a superseding article",
+          "provenance": { "promoted_at": "2026-08-15", "promoted_by": "jacques", "via_halt": "halt-2", "rationale": "PRD technical constraint, unambiguous." },
+          "status": "binding", "status_change": null
+        },
+        {
+          "id": "III.2", "title": "Quality gates", "anchor": "article-iii-2",
+          "rule": "Automated tests, linting, and formatting are required on every change. No secret MAY be hardcoded in source.",
+          "rule_hash": "911714da0eeebf438b855b13ffdfa3bdcdf4bfa59af5e7716c1ebf587d309757",
+          "promoted_from": [{ "source_id": "prd-constraint-technical-baseline", "kind": "prd-constraint" }],
+          "verification": {
+            "applies_when": { "spec_has_any_scope_tag": ["testing", "docs"] },
+            "must_satisfy": [
+              { "type": "citation", "pattern": "Article III" },
+              { "type": "text-presence", "target": "spec.md", "pattern_regex": "test|lint" }
+            ]
+          },
+          "violation_example": "merging a new endpoint with zero test coverage",
+          "provenance": { "promoted_at": "2026-08-15", "promoted_by": "jacques", "via_halt": "halt-2", "rationale": "PRD technical constraint, unambiguous." },
+          "status": "binding", "status_change": null
+        }
+      ],
+      "supersedes": null, "supersede_reason": null
+    },
+    {
+      "id": "IV", "title": "Location Update Discipline", "scope_tags": ["business-logic"],
+      "status": "binding", "promoted_at": "2026-08-15", "promoted_by": "jacques",
+      "sections": [
+        {
+          "id": "IV.1", "title": "No continuous GPS polling", "anchor": "article-iv-1",
+          "rule": "Location sharing MUST NOT poll GPS continuously. Update frequency MUST use a configurable strategy such as normal or battery-saving rather than a single hardcoded interval.",
+          "rule_hash": "24689507e56c76667deada730c672c415004b43c02ea32612494dd49155c87b4",
+          "promoted_from": [{ "source_id": "prd-constraint-battery", "kind": "prd-constraint" }],
+          "verification": {
+            "applies_when": { "spec_has_any_scope_tag": ["business-logic"] },
+            "must_satisfy": [
+              { "type": "citation", "pattern": "Article IV" },
+              { "type": "text-presence", "target": "spec.md", "pattern_regex": "battery|interval|frequency|configurable" }
+            ]
+          },
+          "violation_example": "polling GPS every few seconds regardless of battery mode",
+          "provenance": { "promoted_at": "2026-08-15", "promoted_by": "jacques", "via_halt": "halt-2", "rationale": "Explicit PRD battery constraint; binds the discipline, not the exact frequency values (still an open question)." },
+          "status": "binding", "status_change": null
+        }
+      ],
+      "supersedes": null, "supersede_reason": null
+    },
+    {
+      "id": "V", "title": "Product Scope Boundary", "scope_tags": ["business-logic"],
+      "status": "binding", "promoted_at": "2026-08-15", "promoted_by": "jacques",
+      "sections": [
+        {
+          "id": "V.1", "title": "Permanent non-goals", "anchor": "article-v-1",
+          "rule": "The following are out of scope for this product and MUST NOT be built without a constitution amendment: chat, messaging, video calls, social features, public profiles, advanced parental controls, image recognition, shopping recommendations, third-party supermarket/bank/wearable/smart-home integrations, complex subscription/billing, multi-language support, sophisticated analytics.",
+          "rule_hash": "f9c1afeadcbd119933d760d4d85ad2dd810caf9bf332f2651628f7d675d8a97a",
+          "promoted_from": [{ "source_id": "prd-oos-permanent", "kind": "prd-out-of-scope" }],
+          "verification": {
+            "applies_when": { "spec_has_any_scope_tag": ["business-logic"] },
+            "must_satisfy": [
+              { "type": "citation", "pattern": "Article V" },
+              { "type": "text-presence", "target": "spec.md", "pattern_regex": "out of scope|non-goal" }
+            ]
+          },
+          "violation_example": "shipping a chat or social-feed feature without first amending this article",
+          "provenance": { "promoted_at": "2026-08-15", "promoted_by": "jacques", "via_halt": "halt-2", "rationale": "Explicit permanent non-goal list; distinct from the deferred (not permanent) list, which stayed a candidate." },
+          "status": "binding", "status_change": null
+        }
+      ],
+      "supersedes": null, "supersede_reason": null
+    }
+  ],
+  "candidates": [
+    { "topic": "Scope discipline — stay small, project doubles as a workflow benchmark", "source_id": "prd-constraint-scope-discipline", "source_kind": "prd-constraint", "first_seen": "2026-08-15", "last_seen": "2026-08-15", "promotion_status": "pending", "rejection_reason": null, "suggested_scope_tags": ["docs"], "evidence_count": 0, "halt_history": [{ "at": "2026-08-15", "halt": "halt-2", "decision": "aspirational" }] },
+    { "topic": "Deferred non-goals — geofencing, AI assistant, location history, full offline sync, advanced recurrence", "source_id": "prd-oos-deferred", "source_kind": "prd-out-of-scope", "first_seen": "2026-08-15", "last_seen": "2026-08-15", "promotion_status": "pending", "rejection_reason": null, "suggested_scope_tags": ["business-logic"], "evidence_count": 0, "halt_history": [{ "at": "2026-08-15", "halt": "halt-2", "decision": "aspirational" }] },
+    { "topic": "PostgreSQL FK constraints must enforce invariants", "source_id": "arch-key-decisions-postgres", "source_kind": "arch-binding-block", "first_seen": "2026-08-15", "last_seen": "2026-08-15", "promotion_status": "pending", "rejection_reason": null, "suggested_scope_tags": ["db", "schema"], "evidence_count": 0, "halt_history": [{ "at": "2026-08-15", "halt": "halt-3", "decision": "aspirational" }] },
+    { "topic": "No realtime infra in MVP; must not preclude adding it later", "source_id": "arch-key-decisions-realtime", "source_kind": "arch-binding-block", "first_seen": "2026-08-15", "last_seen": "2026-08-15", "promotion_status": "pending", "rejection_reason": null, "suggested_scope_tags": ["infra", "business-logic"], "evidence_count": 0, "halt_history": [{ "at": "2026-08-15", "halt": "halt-3", "decision": "aspirational" }] },
+    { "topic": "Location: latest-only, never history, in MVP (source calls this an 'initial instinct')", "source_id": "arch-key-decisions-location", "source_kind": "arch-binding-block", "first_seen": "2026-08-15", "last_seen": "2026-08-15", "promotion_status": "pending", "rejection_reason": null, "suggested_scope_tags": ["privacy", "db"], "evidence_count": 0, "halt_history": [{ "at": "2026-08-15", "halt": "halt-3", "decision": "aspirational" }] }
+  ],
+  "withdrawn": [],
+  "supersedes_map": {}
+}
