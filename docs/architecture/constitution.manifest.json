@@ -1,8 +1,8 @@
 {
   "$schema": "https://example.org/orchestrate-constitution/manifest.v1.json",
-  "constitution_version": "1.0",
-  "generated_at": "2026-08-15T12:13:28Z",
-  "generator": "orchestrate-constitution v1.0",
+  "constitution_version": "1.1",
+  "generated_at": "2026-08-15T14:35:53Z",
+  "generator": "orchestrate-constitution v1.4.0",
   "steward": "jacques",
   "adoption_review_due": "2026-11-13",
   "cap": { "binding": 5, "limit": 12, "breach": false, "breach_reason": null },
@@ -14,11 +14,11 @@
     { "id": "prd-constraint-scope-discipline", "path": "docs/PRD/PRD.md", "kind": "prd-constraint", "sha256": "eeb65e3776673346e9a34170480a0bea0570382275fe86d39b2957f4c58218f6", "last_modified": "2026-08-15", "status": null, "section_anchor": "Constraints" },
     { "id": "prd-oos-permanent", "path": "docs/PRD/PRD.md", "kind": "prd-out-of-scope", "sha256": "eeb65e3776673346e9a34170480a0bea0570382275fe86d39b2957f4c58218f6", "last_modified": "2026-08-15", "status": null, "section_anchor": "Non-goals" },
     { "id": "prd-oos-deferred", "path": "docs/PRD/PRD.md", "kind": "prd-out-of-scope", "sha256": "eeb65e3776673346e9a34170480a0bea0570382275fe86d39b2957f4c58218f6", "last_modified": "2026-08-15", "status": null, "section_anchor": "Non-goals" },
-    { "id": "arch-key-decisions-auth", "path": "docs/ARCHITECTURE.md", "kind": "arch-binding-block", "sha256": "f7902afef1cb8fbb033155cdea636384721103f4461193c1b39d3f08e701be08", "last_modified": "2026-08-15", "status": null, "section_anchor": "Key decisions" },
-    { "id": "arch-key-decisions-postgres", "path": "docs/ARCHITECTURE.md", "kind": "arch-binding-block", "sha256": "f7902afef1cb8fbb033155cdea636384721103f4461193c1b39d3f08e701be08", "last_modified": "2026-08-15", "status": null, "section_anchor": "Key decisions" },
-    { "id": "arch-key-decisions-realtime", "path": "docs/ARCHITECTURE.md", "kind": "arch-binding-block", "sha256": "f7902afef1cb8fbb033155cdea636384721103f4461193c1b39d3f08e701be08", "last_modified": "2026-08-15", "status": null, "section_anchor": "Key decisions" },
-    { "id": "arch-key-decisions-location", "path": "docs/ARCHITECTURE.md", "kind": "arch-binding-block", "sha256": "f7902afef1cb8fbb033155cdea636384721103f4461193c1b39d3f08e701be08", "last_modified": "2026-08-15", "status": null, "section_anchor": "Key decisions" },
-    { "id": "arch-key-decisions-ai", "path": "docs/ARCHITECTURE.md", "kind": "arch-binding-block", "sha256": "f7902afef1cb8fbb033155cdea636384721103f4461193c1b39d3f08e701be08", "last_modified": "2026-08-15", "status": null, "section_anchor": "Key decisions" }
+    { "id": "arch-key-decisions-auth", "path": "docs/ARCHITECTURE.md", "kind": "arch-binding-block", "sha256": "a1524bf52f55f8ca2aae68491bab42a8bb8792fbc7b7de7ab6be1d6effffec31", "last_modified": "2026-08-15", "status": null, "section_anchor": "Key decisions" },
+    { "id": "arch-key-decisions-postgres", "path": "docs/ARCHITECTURE.md", "kind": "arch-binding-block", "sha256": "a1524bf52f55f8ca2aae68491bab42a8bb8792fbc7b7de7ab6be1d6effffec31", "last_modified": "2026-08-15", "status": null, "section_anchor": "Key decisions" },
+    { "id": "arch-key-decisions-realtime", "path": "docs/ARCHITECTURE.md", "kind": "arch-binding-block", "sha256": "a1524bf52f55f8ca2aae68491bab42a8bb8792fbc7b7de7ab6be1d6effffec31", "last_modified": "2026-08-15", "status": null, "section_anchor": "Key decisions" },
+    { "id": "arch-key-decisions-location", "path": "docs/ARCHITECTURE.md", "kind": "arch-binding-block", "sha256": "a1524bf52f55f8ca2aae68491bab42a8bb8792fbc7b7de7ab6be1d6effffec31", "last_modified": "2026-08-15", "status": null, "section_anchor": "Key decisions" },
+    { "id": "arch-key-decisions-ai", "path": "docs/ARCHITECTURE.md", "kind": "arch-binding-block", "sha256": "a1524bf52f55f8ca2aae68491bab42a8bb8792fbc7b7de7ab6be1d6effffec31", "last_modified": "2026-08-15", "status": null, "section_anchor": "Key decisions" }
   ],
   "articles": [
     {
@@ -212,7 +212,8 @@
     { "topic": "Deferred non-goals — geofencing, AI assistant, location history, full offline sync, advanced recurrence", "source_id": "prd-oos-deferred", "source_kind": "prd-out-of-scope", "first_seen": "2026-08-15", "last_seen": "2026-08-15", "promotion_status": "pending", "rejection_reason": null, "suggested_scope_tags": ["business-logic"], "evidence_count": 0, "halt_history": [{ "at": "2026-08-15", "halt": "halt-2", "decision": "aspirational" }] },
     { "topic": "PostgreSQL FK constraints must enforce invariants", "source_id": "arch-key-decisions-postgres", "source_kind": "arch-binding-block", "first_seen": "2026-08-15", "last_seen": "2026-08-15", "promotion_status": "pending", "rejection_reason": null, "suggested_scope_tags": ["db", "schema"], "evidence_count": 0, "halt_history": [{ "at": "2026-08-15", "halt": "halt-3", "decision": "aspirational" }] },
     { "topic": "No realtime infra in MVP; must not preclude adding it later", "source_id": "arch-key-decisions-realtime", "source_kind": "arch-binding-block", "first_seen": "2026-08-15", "last_seen": "2026-08-15", "promotion_status": "pending", "rejection_reason": null, "suggested_scope_tags": ["infra", "business-logic"], "evidence_count": 0, "halt_history": [{ "at": "2026-08-15", "halt": "halt-3", "decision": "aspirational" }] },
-    { "topic": "Location: latest-only, never history, in MVP (source calls this an 'initial instinct')", "source_id": "arch-key-decisions-location", "source_kind": "arch-binding-block", "first_seen": "2026-08-15", "last_seen": "2026-08-15", "promotion_status": "pending", "rejection_reason": null, "suggested_scope_tags": ["privacy", "db"], "evidence_count": 0, "halt_history": [{ "at": "2026-08-15", "halt": "halt-3", "decision": "aspirational" }] }
+    { "topic": "Location: latest-only, never history, in MVP (source calls this an 'initial instinct')", "source_id": "arch-key-decisions-location", "source_kind": "arch-binding-block", "first_seen": "2026-08-15", "last_seen": "2026-08-15", "promotion_status": "pending", "rejection_reason": null, "suggested_scope_tags": ["privacy", "db"], "evidence_count": 0, "halt_history": [{ "at": "2026-08-15", "halt": "halt-3", "decision": "aspirational" }] },
+    { "topic": "Backend framework is Fastify (Node.js + TypeScript)", "source_id": "arch-intended-stack-backend-framework", "source_kind": "arch-binding-block", "first_seen": "2026-08-15", "last_seen": "2026-08-15", "promotion_status": "pending", "rejection_reason": null, "suggested_scope_tags": ["infra"], "evidence_count": 1, "halt_history": [{ "at": "2026-08-15", "halt": "halt-3-arch", "decision": "appendix" }] }
   ],
   "withdrawn": [],
   "supersedes_map": {}
