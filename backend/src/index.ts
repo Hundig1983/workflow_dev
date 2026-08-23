@@ -7,6 +7,7 @@ const pool = createPool(config.databaseUrl);
 const app = buildServer(pool, {
   sessionTtlHours: config.sessionTtlHours,
   logLevel: config.logLevel,
+  corsOrigins: config.corsOrigins,
 });
 
 async function shutdown(signal: string): Promise<void> {

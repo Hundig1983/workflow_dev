@@ -107,18 +107,21 @@ alignment with each by ticking the box and ensuring the proposal text satisfies 
   reload) rather than in `localStorage`, which would be the "plain storage" this article forbids —
   strictly more conservative, and documented in the README. **The TLS clause is unexercised**: nothing is
   deployed, so no transport configuration exists in the diff to verify.
-- [ ] **[Article III.1](../../../docs/architecture/constitution.md#article-iii-1) — Stack & runtime**
+- [x] **[Article III.1](../../../docs/architecture/constitution.md#article-iii-1) — Stack & runtime**
   Verify: text references one of `postgres`, `docker`, `expo`, `react native`.
   → **PostgreSQL** as system of record with reproducible migrations, **React Native**/**Expo** +
   TypeScript client, whole stack runs locally via **Docker** Compose.
-  **Evidence — partial, so deliberately left unticked.** Verified: PostgreSQL 17 as system of record
-  with a reproducible numbered migration (`backend/src/db/migrations.ts`, `001_initial`), and a
-  React Native + Expo + TypeScript client (`client/`, Expo SDK 57), running end-to-end against the API.
-  **Not verified: "the whole stack runs locally via Docker Compose."** No container runtime was available
-  in this environment, so `docker-compose.yml` has still never been executed. A verified alternative
-  local path exists (`npm run db:dev`, backed by `embedded-postgres`) and is what the README recommends,
-  but it is not the Compose claim this article's text makes. **Task 8.1 is exactly this verification and
-  remains open — this box should be ticked by whoever completes it, not before.**
+  **Evidence (ticked 2026-08-23, task 8.1).** PostgreSQL 17 as system of record with a reproducible
+  numbered migration (`backend/src/db/migrations.ts`, `001_initial`); a React Native + Expo + TypeScript
+  client (`client/`, Expo SDK 57); and — the clause that kept this box unticked through slices 1–2 — the
+  **whole stack running locally via Docker Compose**, executed from a fresh clone following only the
+  README: `docker compose up --build` (api image built, `postgres:17-alpine` healthy), migrations applied
+  with `docker compose exec api node dist/src/db/cli.js up`, then signup → empty dashboard → sign out →
+  rejected wrong password → login → dashboard → sign out driven in headless Chromium against the web
+  client on port 8081 talking to the compose API. Three defects found and fixed by that run:
+  `POSTGRES_PORT` host-port override, the missing migration step in the README, and an env-driven CORS
+  allow-list (`CORS_ORIGINS`, empty = deny, `@fastify/cors`) without which no browser could call the API.
+  Still unexercised: the TLS clause of I.2 (nothing is deployed) — unchanged.
 - [x] **[Article III.2](../../../docs/architecture/constitution.md#article-iii-2) — Quality gates**
   Verify: text references one of `test`, `lint`.
   → Automated **tests** (unit, integration, isolation) plus **lint** and format configuration ship with

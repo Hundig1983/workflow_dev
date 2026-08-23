@@ -101,18 +101,39 @@ here, not a shipping one.
 
 ## Running with Docker Compose
 
-`docker-compose.yml` describes a `postgres` + `api` stack:
+`docker-compose.yml` describes a `postgres` + `api` stack. From a clean checkout:
 
 ```bash
-cp backend/.env.example .env      # set POSTGRES_PASSWORD
-docker compose up --build
+cp backend/.env.example .env               # set POSTGRES_PASSWORD; adjust ports if needed (below)
+docker compose up --build -d               # postgres (healthcheck) then api
+docker compose exec api node dist/src/db/cli.js up   # apply migrations — the api does NOT migrate on start
 ```
 
-> **Not yet verified.** No Docker runtime has been available in the development environment this was
-> written in, so the compose path has never actually been executed. It is written from the same
-> configuration the tested path uses, but treat it as unproven until someone runs it. Verifying it is
-> task 8.1 of the walking-skeleton change, deliberately left open. The `npm run db:dev` path above **is**
-> verified and is the recommended way to run locally.
+The API is then on `http://127.0.0.1:${PORT}` (default 3000). Sign up, log in and read the dashboard with
+the client (`cp client/.env.example client/.env`, point `EXPO_PUBLIC_API_URL` at that port, then
+`npm run client:web`) or with `curl`:
+
+```bash
+curl -X POST localhost:3000/auth/signup -H 'content-type: application/json' -d '{"email":"me@example.com","password":"Correct-Horse-9!"}'
+curl -X POST localhost:3000/auth/login  -H 'content-type: application/json' -d '{"email":"me@example.com","password":"Correct-Horse-9!"}'
+curl localhost:3000/families/me/dashboard -H 'authorization: Bearer <token>'     # -> "isEmpty": true
+```
+
+**Ports.** The stack publishes `POSTGRES_PORT` (default 5432) and `PORT` (default 3000) on the host.
+If either is already taken on your machine, change them in `.env` — only the host side moves, the
+containers keep their ports. **Browser clients.** The web client is served from port 8081 and calls the
+API cross-origin, so the API must list that origin in `CORS_ORIGINS` (the example file already does —
+`http://localhost:8081,http://127.0.0.1:8081`). Leave `CORS_ORIGINS` empty to refuse every browser
+origin; the native apps send no `Origin` header and are unaffected.
+
+> **Verified 2026-08-23** from a fresh clone on WSL2 + Docker Desktop (Compose v2.40), with `PORT=3001`
+> and `POSTGRES_PORT=5433` because 3000/5432 were taken on that host: image build, `postgres` healthy,
+> migrations applied through the container, and the full journey — signup → empty dashboard → sign out →
+> rejected wrong password → login → dashboard → sign out — driven in a real browser (headless Chromium)
+> against the web client. Running it surfaced and fixed three defects: the postgres host port was not
+> overridable, the compose section had no migration step, and the API sent no CORS headers so the web
+> client could not call it from a browser at all. Stop the stack with `docker compose down` (`-v` also
+> drops the database volume).
 
 ## Project layout
 

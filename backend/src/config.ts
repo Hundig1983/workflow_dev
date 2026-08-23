@@ -24,6 +24,14 @@ export interface Config {
   host: string;
   sessionTtlHours: number;
   logLevel: string;
+  corsOrigins: string[];
+}
+
+function csv(name: string): string[] {
+  return (process.env[name] ?? '')
+    .split(',')
+    .map((value) => value.trim())
+    .filter((value) => value !== '');
 }
 
 export function loadConfig(): Config {
@@ -33,5 +41,6 @@ export function loadConfig(): Config {
     host: process.env['HOST'] ?? '0.0.0.0',
     sessionTtlHours: intOr('SESSION_TTL_HOURS', 720),
     logLevel: process.env['LOG_LEVEL'] ?? 'info',
+    corsOrigins: csv('CORS_ORIGINS'),
   };
 }

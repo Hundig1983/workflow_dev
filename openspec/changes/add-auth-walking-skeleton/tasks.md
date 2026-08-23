@@ -59,7 +59,7 @@
 
 ## 8. Close-out
 
-- [ ] 8.1 Verify the whole stack runs from a clean checkout following only the README: compose up, migrate, run the app, sign up, log in, see the empty dashboard (Article III.1)
+- [x] 8.1 Verify the whole stack runs from a clean checkout following only the README: compose up, migrate, run the app, sign up, log in, see the empty dashboard (Article III.1)
 - [x] 8.2 Confirm `lint` and the full test suite pass, and that no secret is hardcoded anywhere in source (Article III.2)
 - [x] 8.3 Replace the placeholder `README.md` with real setup, run, migrate, and test instructions — it currently predates the project having an identity
 - [x] 8.4 Update `ARCHITECTURE.md` to record Fastify as the chosen backend framework, resolving its open question rather than leaving the seed doc claiming the choice is deferred
