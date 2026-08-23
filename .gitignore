@@ -36,3 +36,6 @@ web-build/
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# Session context (local only)
+docs/session_context/
