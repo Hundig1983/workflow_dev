@@ -7,9 +7,26 @@
   "spec_fingerprint": "openspec-validate",
   "alignment": {
     "mode": "aligned",
-    "scope_tags": ["tenancy", "db", "testing", "business-logic"],
-    "applicable_article_ids": ["I.1", "I.3", "III.2", "V.1"]
+    "scope_tags": [
+      "tenancy",
+      "db",
+      "testing",
+      "business-logic"
+    ],
+    "applicable_article_ids": [
+      "I.1",
+      "I.3",
+      "III.2",
+      "V.1"
+    ]
   },
-  "issue": null,
-  "stages": ["spec-creator"]
+  "issue": {
+    "forge": "github",
+    "number": 10,
+    "url": "https://github.com/Hundig1983/workflow_dev/issues/10"
+  },
+  "stages": [
+    "spec-creator",
+    "create-issue"
+  ]
 }
