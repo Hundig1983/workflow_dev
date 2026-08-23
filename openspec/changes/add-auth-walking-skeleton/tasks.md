@@ -49,18 +49,18 @@
 
 ## 7. Expo client
 
-- [ ] 7.1 Initialise the React Native + Expo TypeScript app with lint and format wired to the same standard as the backend (Article III.1)
-- [ ] 7.2 Build the Signup screen: collect email and password, surface field-level validation errors from the API
-- [ ] 7.3 Build the Login screen with its generic authentication-failure message
-- [ ] 7.4 Store the session token in the platform secure store, never in plain async storage, and confirm no secret is embedded in the bundle (Article I.2)
-- [ ] 7.5 Attach the session token to authenticated requests and route the user to Login when a request is rejected as unauthenticated
-- [ ] 7.6 Build the Dashboard screen rendering the family with an explicit, recognisable empty state (spec: family-dashboard → Explicit empty state)
-- [ ] 7.7 Present load failures distinctly from the empty state, so a member can tell "nothing here yet" from "could not load" (spec: family-dashboard → Explicit empty state)
+- [x] 7.1 Initialise the React Native + Expo TypeScript app with lint and format wired to the same standard as the backend (Article III.1)
+- [x] 7.2 Build the Signup screen: collect email and password, surface field-level validation errors from the API
+- [x] 7.3 Build the Login screen with its generic authentication-failure message
+- [x] 7.4 Store the session token in the platform secure store, never in plain async storage, and confirm no secret is embedded in the bundle (Article I.2)
+- [x] 7.5 Attach the session token to authenticated requests and route the user to Login when a request is rejected as unauthenticated
+- [x] 7.6 Build the Dashboard screen rendering the family with an explicit, recognisable empty state (spec: family-dashboard → Explicit empty state)
+- [x] 7.7 Present load failures distinctly from the empty state, so a member can tell "nothing here yet" from "could not load" (spec: family-dashboard → Explicit empty state)
 
 ## 8. Close-out
 
 - [ ] 8.1 Verify the whole stack runs from a clean checkout following only the README: compose up, migrate, run the app, sign up, log in, see the empty dashboard (Article III.1)
 - [x] 8.2 Confirm `lint` and the full test suite pass, and that no secret is hardcoded anywhere in source (Article III.2)
-- [ ] 8.3 Replace the placeholder `README.md` with real setup, run, migrate, and test instructions — it currently predates the project having an identity
+- [x] 8.3 Replace the placeholder `README.md` with real setup, run, migrate, and test instructions — it currently predates the project having an identity
 - [x] 8.4 Update `ARCHITECTURE.md` to record Fastify as the chosen backend framework, resolving its open question rather than leaving the seed doc claiming the choice is deferred
-- [ ] 8.5 Tick the Constitutional Alignment checkboxes in `proposal.md` only against evidence in the merged diff, not intent
+- [x] 8.5 Tick the Constitutional Alignment checkboxes in `proposal.md` only against evidence in the merged diff, not intent

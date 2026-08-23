@@ -27,5 +27,12 @@ dist/
 build/
 *.egg-info/
 
+# Expo
+.expo/
+web-build/
+
+# Local development database cluster (scripts/devdb.mjs)
+.pgdata/
+
 # Claude Code local settings
 .claude/settings.local.json
