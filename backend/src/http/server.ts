@@ -4,6 +4,7 @@ import type pg from 'pg';
 import { fail } from './errors.js';
 import { registerAuthRoutes } from './routes/auth.js';
 import { registerFamilyRoutes } from './routes/families.js';
+import { registerShoppingRoutes } from './routes/shopping.js';
 
 export interface ServerOptions {
   sessionTtlHours: number;
@@ -51,6 +52,7 @@ export function buildServer(pool: pg.Pool, options: ServerOptions): FastifyInsta
 
   registerAuthRoutes(app, pool, options.sessionTtlHours);
   registerFamilyRoutes(app, pool);
+  registerShoppingRoutes(app, pool);
 
   return app;
 }

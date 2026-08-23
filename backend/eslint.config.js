@@ -13,7 +13,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              group: ['**/family/**', '**/dashboard/**', '**/registration/**'],
+              group: ['**/family/**', '**/dashboard/**', '**/registration/**', '**/shopping/**'],
               message:
                 'The auth module must not import family or business logic (ARCHITECTURE.md module boundary).',
             },

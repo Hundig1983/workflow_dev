@@ -4,6 +4,7 @@ import { useAuth } from '../auth/context';
 import { fetchDashboard } from '../family/api';
 import type { Dashboard } from '../family/types';
 import { UnauthenticatedError } from '../api/client';
+import { isShoppingSummaryArray } from '../shopping/types';
 import { colors, radius, spacing } from '../ui/theme';
 
 type LoadState =
@@ -11,7 +12,11 @@ type LoadState =
   | { kind: 'loaded'; dashboard: Dashboard }
   | { kind: 'failed'; message: string };
 
-export function DashboardScreen(): React.JSX.Element {
+interface DashboardScreenProps {
+  onOpenShopping: () => void;
+}
+
+export function DashboardScreen({ onOpenShopping }: DashboardScreenProps): React.JSX.Element {
   const { api, signOut } = useAuth();
   const [state, setState] = useState<LoadState>({ kind: 'loading' });
 
@@ -93,15 +98,42 @@ export function DashboardScreen(): React.JSX.Element {
             Your family is set up and ready. Calendar events, tasks, and shopping lists will appear
             here as you add them.
           </Text>
+          <Pressable style={styles.emptyAction} onPress={onOpenShopping} accessibilityRole="button">
+            <Text style={styles.emptyActionText}>Start a shopping list</Text>
+          </Pressable>
         </View>
       ) : (
         <View style={styles.sections}>
-          {dashboard.sections.map((section) => (
-            <View key={section.key} style={styles.sectionCard}>
-              <Text style={styles.sectionTitle}>{section.key}</Text>
-              <Text style={styles.mutedText}>{section.items.length} items</Text>
-            </View>
-          ))}
+          {dashboard.sections.map((section) => {
+            if (section.key === 'shopping' && isShoppingSummaryArray(section.items)) {
+              return (
+                <Pressable
+                  key={section.key}
+                  style={styles.sectionCard}
+                  onPress={onOpenShopping}
+                  accessibilityRole="button"
+                  testID="dashboard-shopping"
+                >
+                  <Text style={styles.sectionTitle}>shopping</Text>
+                  {section.items.length === 0 ? (
+                    <Text style={styles.mutedText}>No lists yet — tap to create one</Text>
+                  ) : (
+                    section.items.map((summary) => (
+                      <Text key={summary.listId} style={styles.mutedText}>
+                        {summary.name} · {summary.uncheckedCount} to buy
+                      </Text>
+                    ))
+                  )}
+                </Pressable>
+              );
+            }
+            return (
+              <View key={section.key} style={styles.sectionCard}>
+                <Text style={styles.sectionTitle}>{section.key}</Text>
+                <Text style={styles.mutedText}>{section.items.length} items</Text>
+              </View>
+            );
+          })}
         </View>
       )}
 
@@ -138,6 +170,14 @@ const styles = StyleSheet.create({
   },
   emptyTitle: { fontSize: 18, fontWeight: '700', color: colors.empty, marginBottom: spacing.sm },
   emptyBody: { color: colors.textMuted, textAlign: 'center', lineHeight: 20 },
+  emptyAction: {
+    marginTop: spacing.md,
+    backgroundColor: colors.primary,
+    borderRadius: radius.sm,
+    paddingVertical: spacing.sm + 2,
+    paddingHorizontal: spacing.lg,
+  },
+  emptyActionText: { color: colors.primaryText, fontWeight: '600' },
 
   errorCard: {
     backgroundColor: colors.dangerSurface,

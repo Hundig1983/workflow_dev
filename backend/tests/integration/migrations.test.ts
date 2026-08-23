@@ -22,13 +22,15 @@ async function tableNames(): Promise<string[]> {
 describe('migrations', () => {
   it('applies cleanly against a fresh database', async () => {
     const ran = await migrateUp(db.pool);
-    expect(ran).toEqual(['001_initial']);
+    expect(ran).toEqual(['001_initial', '002_shopping_lists']);
     expect(await tableNames()).toEqual(
       expect.arrayContaining([
         'families',
         'family_members',
         'schema_migrations',
         'sessions',
+        'shopping_items',
+        'shopping_lists',
         'users',
       ]),
     );
@@ -39,6 +41,12 @@ describe('migrations', () => {
   });
 
   it('reverts cleanly, satisfying the rollback requirement', async () => {
+    expect(await migrateDown(db.pool)).toBe('002_shopping_lists');
+    const afterFirst = await tableNames();
+    for (const table of ['shopping_items', 'shopping_lists']) {
+      expect(afterFirst).not.toContain(table);
+    }
+
     expect(await migrateDown(db.pool)).toBe('001_initial');
 
     const remaining = await tableNames();
@@ -56,7 +64,7 @@ describe('migrations', () => {
   });
 
   it('can be re-applied after a rollback', async () => {
-    expect(await migrateUp(db.pool)).toEqual(['001_initial']);
+    expect(await migrateUp(db.pool)).toEqual(['001_initial', '002_shopping_lists']);
   });
 });
 
