@@ -61,4 +61,45 @@ export const migrations: readonly Migration[] = [
       DROP TABLE IF EXISTS users;
     `,
   },
+  {
+    id: '002_shopping_lists',
+    up: `
+      CREATE TABLE shopping_lists (
+        id         uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+        family_id  uuid NOT NULL REFERENCES families(id) ON DELETE CASCADE,
+        name       text NOT NULL,
+        created_by uuid REFERENCES users(id) ON DELETE SET NULL,
+        created_at timestamptz NOT NULL DEFAULT now(),
+        updated_at timestamptz NOT NULL DEFAULT now(),
+        CONSTRAINT shopping_lists_name_not_blank CHECK (length(trim(name)) > 0),
+        CONSTRAINT shopping_lists_name_max CHECK (length(name) <= 120)
+      );
+
+      CREATE INDEX shopping_lists_family_id_idx ON shopping_lists (family_id);
+
+      CREATE TABLE shopping_items (
+        id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+        list_id     uuid NOT NULL REFERENCES shopping_lists(id) ON DELETE CASCADE,
+        name        text NOT NULL,
+        quantity    text,
+        note        text,
+        checked_at  timestamptz,
+        checked_by  uuid REFERENCES users(id) ON DELETE SET NULL,
+        archived_at timestamptz,
+        created_by  uuid REFERENCES users(id) ON DELETE SET NULL,
+        created_at  timestamptz NOT NULL DEFAULT now(),
+        updated_at  timestamptz NOT NULL DEFAULT now(),
+        CONSTRAINT shopping_items_name_not_blank CHECK (length(trim(name)) > 0),
+        CONSTRAINT shopping_items_archived_implies_checked
+          CHECK (archived_at IS NULL OR checked_at IS NOT NULL)
+      );
+
+      CREATE INDEX shopping_items_active_by_list_idx
+        ON shopping_items (list_id) WHERE archived_at IS NULL;
+    `,
+    down: `
+      DROP TABLE IF EXISTS shopping_items;
+      DROP TABLE IF EXISTS shopping_lists;
+    `,
+  },
 ];

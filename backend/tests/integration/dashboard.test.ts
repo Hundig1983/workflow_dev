@@ -77,6 +77,80 @@ describe('GET /families/me/dashboard', () => {
     expect((response.json() as { family: { id: string } }).family.id).toBe(familyId);
   });
 
+  it('surfaces shopping list summaries and stops being empty (family-dashboard delta)', async () => {
+    const { token } = await signupAndLogin(ctx.app, 'parent@example.com');
+    const list = (
+      await ctx.app.inject({
+        method: 'POST',
+        url: '/families/me/shopping-lists',
+        headers: auth(token),
+        payload: { name: 'Groceries' },
+      })
+    ).json() as { id: string };
+    for (const name of ['Milk', 'Eggs']) {
+      await ctx.app.inject({
+        method: 'POST',
+        url: `/families/me/shopping-lists/${list.id}/items`,
+        headers: auth(token),
+        payload: { name },
+      });
+    }
+
+    const res = await ctx.app.inject({
+      method: 'GET',
+      url: '/families/me/dashboard',
+      headers: auth(token),
+    });
+    const body = res.json() as {
+      isEmpty: boolean;
+      sections: {
+        key: string;
+        items: { listId: string; name: string; uncheckedCount: number }[];
+      }[];
+    };
+    const shopping = body.sections.find((s) => s.key === 'shopping');
+    expect(shopping?.items).toEqual([{ listId: list.id, name: 'Groceries', uncheckedCount: 2 }]);
+    expect(body.isEmpty).toBe(false);
+  });
+
+  it('a family whose lists exist but hold no unchecked items is still not empty', async () => {
+    const { token } = await signupAndLogin(ctx.app, 'parent@example.com');
+    const list = (
+      await ctx.app.inject({
+        method: 'POST',
+        url: '/families/me/shopping-lists',
+        headers: auth(token),
+        payload: { name: 'Done list' },
+      })
+    ).json() as { id: string };
+    const item = (
+      await ctx.app.inject({
+        method: 'POST',
+        url: `/families/me/shopping-lists/${list.id}/items`,
+        headers: auth(token),
+        payload: { name: 'Milk' },
+      })
+    ).json() as { id: string };
+    await ctx.app.inject({
+      method: 'POST',
+      url: `/families/me/shopping-lists/${list.id}/items/${item.id}/check`,
+      headers: auth(token),
+    });
+
+    const res = await ctx.app.inject({
+      method: 'GET',
+      url: '/families/me/dashboard',
+      headers: auth(token),
+    });
+    const body = res.json() as {
+      isEmpty: boolean;
+      sections: { key: string; items: { uncheckedCount: number }[] }[];
+    };
+    // "Lists exist and everything is done" is NOT the same state as "no lists yet".
+    expect(body.sections.find((s) => s.key === 'shopping')?.items[0]?.uncheckedCount).toBe(0);
+    expect(body.isEmpty).toBe(false);
+  });
+
   it('honours a custom family name given at signup', async () => {
     const created = await ctx.app.inject({
       method: 'POST',

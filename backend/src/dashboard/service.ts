@@ -1,11 +1,12 @@
 import type { Queryable } from '../db/pool.js';
 import { findFamilyInScope, listMembersInScope } from '../family/repository.js';
 import type { FamilyScope } from '../family/scope.js';
+import { listShoppingSummaries, type ShoppingListSummary } from '../shopping/repository.js';
 
-export interface DashboardSection {
-  key: 'calendar' | 'tasks' | 'shopping' | 'location';
-  items: readonly never[];
-}
+/** Feature sections fill in as their areas land; only shopping is real so far. */
+export type DashboardSection =
+  | { key: 'calendar' | 'tasks' | 'location'; items: readonly never[] }
+  | { key: 'shopping'; items: readonly ShoppingListSummary[] };
 
 export interface Dashboard {
   family: { id: string; name: string };
@@ -26,9 +27,13 @@ export async function buildDashboard(db: Queryable, scope: FamilyScope): Promise
   if (!family) return null;
 
   const members = await listMembersInScope(db, scope);
-  // No feature area exists yet, so every section is empty by construction. When
-  // calendar/tasks/shopping/location land they populate these same keys.
-  const sections = SECTION_KEYS.map((key) => ({ key, items: [] as readonly never[] }));
+  const shopping = await listShoppingSummaries(db, scope);
+  // A list with zero unchecked items still counts as content: "lists exist and
+  // everything is done" is not the same state as "no lists yet" (family-dashboard
+  // delta spec) — so summaries appear regardless of their counts.
+  const sections: DashboardSection[] = SECTION_KEYS.map((key) =>
+    key === 'shopping' ? { key, items: shopping } : { key, items: [] as readonly never[] },
+  );
 
   return {
     family: { id: family.id, name: family.name },

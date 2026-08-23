@@ -49,7 +49,7 @@ export interface ApiClientOptions {
 }
 
 export interface RequestOptions {
-  method?: 'GET' | 'POST';
+  method?: 'GET' | 'POST' | 'PATCH' | 'DELETE';
   body?: unknown;
   /** Send without the Authorization header even if a token exists (login/signup). */
   anonymous?: boolean;
