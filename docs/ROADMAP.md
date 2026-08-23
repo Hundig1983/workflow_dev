@@ -41,8 +41,9 @@ software-development workflow, so scope discipline is itself a project goal, not
 *(source: §24, §38, §40, §42)*
 
 ## Open Questions
-- Which MVP vertical slice should be built (and validated) first — shared shopping lists (named the
-  strongest, simplest offline case) or the family calendar (called "central," presented first in the
-  source)? The source states an order of *presentation*, not a decision about build order.
+- ~~Which MVP vertical slice should be built first — shopping lists or calendar?~~ **Resolved
+  2026-08-23 (j.levrat): shared shopping lists first** — the strongest offline case, the simplest
+  end-to-end slice, and the area where working prior art (patate) supplies vetted decisions. Calendar is
+  the next candidate. (The walking skeleton — auth + empty dashboard — shipped 2026-08-23, issue #2.)
 - Should the five pre-planned workflow-benchmark change requests (see above) run strictly after a stable
   MVP, or be interleaved with MVP development? Not stated either way.

@@ -82,6 +82,13 @@ seeded: 2026-08-15
   app. · **Rationale:** shopping is named as "the strongest offline use case" and keeps MVP bounded. ·
   **Status:** assumed (candidate ADR) — the source explicitly lists this as a 3-way undecided choice; see
   Open Questions.
+- **Decision:** List mutations are designed **offline-ready without shipping offline**: every list
+  resource carries `updated_at`; check-off is idempotent; conflict policy is last-write-wins on
+  `updated_at` with delete-wins, over an optimistic UI. · **Rationale:** satisfies the "must not preclude
+  offline/realtime" constraint at zero implementation cost now — the queue-and-replay client can be added
+  later against unchanged API semantics. Imported from working prior art (patate,
+  `github.com/Hundig1983/patate`, ARCHITECTURE §5.2–5.3), where exactly these semantics carried a
+  SQLite offline queue. · **Status:** **decided (2026-08-23, j.levrat)**.
 
 ## Integration points
 <!-- evidence: intent-based -->

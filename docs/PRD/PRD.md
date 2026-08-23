@@ -41,7 +41,8 @@ fifth pillar):
 - **Shared shopping lists** — multiple lists per family; items with name/quantity/note/category/
   checked state/creator/dates; shared and close-to-real-time (full WebSocket infra not required for the
   first prototype, but the architecture must not preclude adding it); a "shopping mode" UX emphasizing
-  unchecked items and quick check/add, with purchased items staying visible until explicitly cleared.
+  unchecked items and quick check/add, with purchased items staying visible — grouped apart from
+  unchecked ones — until an explicit clear, which archives them rather than deleting them.
 - **Family tasks** — title/description/assignee/due date/priority/status/creator/optional recurrence;
   states todo/in-progress/completed; assignable to any member (children included); appears in both
   personal and family task views. No full Kanban system.
@@ -106,11 +107,17 @@ every feature, advanced recurring-event editing.
   header) — not independently confirmed by a dedicated naming statement. Confirm or rename at the G-seed
   gate.
 - One administrator per family is assumed sufficient for MVP (source hedges with "may be sufficient").
-- Shopping-list write conflicts default to **last-write-wins** for MVP (source: "might be acceptable,"
-  explicitly flagged as needing to stay an *explicit* decision, not an accidental one).
-- Purchased shopping items **stay visible** until explicitly cleared, rather than auto-hiding (stated
-  preference, §16, to avoid confusing two family members) — the source *also* lists this as an open
-  question (§37.18) needing explicit confirmation, so treat this as the MVP default, not a closed decision.
+- ~~Shopping-list write conflicts default to **last-write-wins** for MVP~~ **Decided (2026-08-23,
+  j.levrat):** simultaneous-edit resolution is **last-write-wins on `updated_at`, enriched with an
+  idempotent check-off and delete-wins**, over an optimistic UI. The source's demand that this stay an
+  *explicit* decision is hereby met — imported from working prior art (patate, the author's shipped
+  shopping-list app: `github.com/Hundig1983/patate`, PRD §6.1 + ARCHITECTURE §5.2), where the rationale
+  is recorded: list contention is low, a wrong resolution costs one re-added item, CRDTs are
+  overcomplex for the domain.
+- Purchased shopping items **stay visible** until explicitly cleared — **confirmed as a decision
+  (2026-08-23, j.levrat)**, closing the source's open question §37.18: checked items remain visible,
+  grouped apart from unchecked ones, and the explicit clear **archives** them (prior art: patate FR-04.4/
+  FR-04.5, where the archive doubles as purchase history — history itself stays out of the first slice).
 - MVP recurrence limited to daily/weekly/monthly patterns only (no full RFC recurrence).
 - Backend web framework is unspecified — the source explicitly defers this to the architecture phase
   (only "TypeScript" and "REST API" are fixed).
@@ -139,8 +146,8 @@ verbatim per the skill's invariant.
 - Should the app support multiple time zones? How should daylight-saving-time changes be handled?
 
 **Shopping**
-- Beyond the tentative last-write-wins default (see Assumptions), is there a better simultaneous-edit
-  resolution the team should commit to?
+- ~~Beyond the tentative last-write-wins default, is there a better simultaneous-edit resolution?~~
+  **Resolved 2026-08-23** — see Assumptions: LWW on `updated_at` + idempotent check-off + delete-wins.
 - Should shopping-list changes generate notifications — and if so, batched how (adding 5 items shouldn't
   mean 5 pushes)?
 
