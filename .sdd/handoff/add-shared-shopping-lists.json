@@ -1,0 +1,15 @@
+{
+  "schema": "sdd-handoff/v1",
+  "feature_slug": "add-shared-shopping-lists",
+  "mode": "openspec",
+  "spec_path": "openspec/changes/add-shared-shopping-lists/",
+  "spec_file": "openspec/changes/add-shared-shopping-lists/proposal.md",
+  "spec_fingerprint": "openspec-validate",
+  "alignment": {
+    "mode": "aligned",
+    "scope_tags": ["tenancy", "db", "testing", "business-logic"],
+    "applicable_article_ids": ["I.1", "I.3", "III.2", "V.1"]
+  },
+  "issue": null,
+  "stages": ["spec-creator"]
+}
